@@ -68,3 +68,8 @@ apps/db-agent
 # Generated htpasswd files (hashes are safe to store in secrets/CI, plaintext never committed)
 .htpasswd
 *.htpasswd
+
+# Storage
+minio-data/
+postgres-data/
+redis-data/
