@@ -65,5 +65,11 @@ docker buildx build -f docker/Dockerfile.jobs --platform linux/arm64,linux/amd64
 ## Running
 ```sh
 docker compose -f docker-compose.apexlearned.yaml up -d
+docker compose -f docker-compose.apexlearned.yaml down
+
 docker compose -f docker-compose.apexlearned.yaml --profile minio up -d
+docker compose -f docker-compose.apexlearned.yaml --profile minio down
+
+sudo docker compose -f docker-compose.apexlearned.yaml --profile minio up -d
+sudo docker compose -f docker-compose.apexlearned.yaml --profile minio down
 ```
