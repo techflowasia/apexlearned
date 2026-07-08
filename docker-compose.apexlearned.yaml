@@ -35,6 +35,8 @@ services:
       timeout: 5s
       retries: 15
       start_period: 10s
+    networks:
+      - portainer_default
 
   redis:
     image: redis:7-alpine
@@ -48,6 +50,8 @@ services:
       timeout: 3s
       retries: 10
       start_period: 5s
+    networks:
+      - portainer_default
 
   minio:
     image: minio/minio:latest
@@ -63,6 +67,8 @@ services:
       - ./minio-data:/data
     profiles:
       - minio
+    networks:
+      - portainer_default
 
   minio-init:
     image: minio/mc:latest
@@ -76,6 +82,8 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
     profiles:
       - minio
+    networks:
+      - portainer_default
 
   api:
     image: ghcr.io/techflowasia/apexlearned-api:1.0.0
@@ -137,6 +145,8 @@ services:
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?set a strong BETTER_AUTH_SECRET in .env}
       SKIP_DB_SETUP: ${SKIP_DB_SETUP:-}
     restart: unless-stopped
+    networks:
+      - portainer_default
 
   dashboard:
     image: ghcr.io/techflowasia/apexlearned-dashboard:1.0.0
@@ -171,6 +181,8 @@ services:
       UPLOAD_MAX_LANDING_IMAGE_MB: ${UPLOAD_MAX_LANDING_IMAGE_MB:-}
       UPLOAD_MAX_THUMBNAIL_MB: ${UPLOAD_MAX_THUMBNAIL_MB:-}
     restart: unless-stopped
+    networks:
+      - portainer_default
 
   # Background worker (BullMQ). Drains the Redis queue: video processing, transcription,
   # AI course generation, and emails.
@@ -207,8 +219,14 @@ services:
       # Transcription + OpenAI-backed agent runs.
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
     restart: unless-stopped
+    networks:
+      - portainer_default
 
 volumes:
   postgres-data:
   redis-data:
   minio-data:
+
+networks:
+  portainer_default:
+    external: true
