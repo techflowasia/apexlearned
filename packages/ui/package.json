@@ -5,7 +5,7 @@
   "scripts": {
     "generate-css": "echo 'generating CSS' && tailwindcss -i ./src/index.css -o ./src/output.css --minify",
     "build": "pnpm generate-css",
-    "dev": "pnpm generate-css --watch",
+    "dev": "node watch-css.js",
     "format": "prettier --write .",
     "prefix:list": "node add-ui-prefix.cjs --dry-run",
     "prefix:check": "node add-ui-prefix.cjs --check",
@@ -15,6 +15,7 @@
     "prefix": "node add-ui-prefix.cjs && pnpm format"
   },
   "devDependencies": {
+    "chokidar": "^4.0.3",
     "@internationalized/date": "^3.8.1",
     "@lucide/svelte": "^0.562.0",
     "@shikijs/langs": "^3.22.0",
